@@ -1,0 +1,69 @@
+{% extends 'reviews/paper_list.html' %}
+
+{% block title %}
+{% endblock %}
+{% block content %}
+<div class="msg" style="background-color: #EEF;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 2px;
+    color : darkred">Showing Similar papers for:
+        <form  method = "post" style="float: right; color: black" >
+        {% csrf_token %}
+        <select name = 'number'>
+            <option value="Default">Item: {{ show }}</option>
+            <option value="10">Show 10</option>
+            <option value="20">Show 20</option>
+            <option value="all">Show all</option>
+        </select>
+
+        <select name="orderby">
+          <option value="Defualt">Sort by: {{ rank }}</option>
+            <option value="Newest to Oldest">Date: Newest to Oldest</option>
+            <option value="Avg Rating: High to Low">Avg Rating: High to Low</option>
+            <option value="Num Rating: High to Low">Num Rating: High to Low</option>
+            <input type="submit" name = "Submit" value="Show" />
+        </select>
+      </form>
+    <br>
+
+
+<div style=" color : black">  {{ paper.name }} </div>
+ </div>
+ <br>
+
+
+{% if paper_list %}
+<div class="row"  style="margin-left: auto;
+    margin-right: auto;
+    ">
+{% for paper_ in  paper_list|slice:":20" %}
+    <div class="apaper">
+        {% if paper_.recid != paper.recid  %}
+        <h4><a style="color:black;float:left" href="{% url 'reviews:paper_detail' paper_.recid %}">
+        {{ paper_.name }}
+        </a></h4>
+        <h5> <a style="float: right;cursor: pointer;text-decoration: underline; display: inline-block;"  href="{% url 'reviews:show_similar_paper' paper_.recid %}">
+            Show similar Papers > </a> </h5>
+        <br>
+        {% if paper_.author.all  %}
+            {% for author in paper_.author.all %}
+                <p style="float:left;color:#900;font-family:arial">{{ author.name }}</p>
+                <div style="height:12px;width:20px;background-color:white;float:left;"></div>
+            {% endfor %}
+
+        {% endif %}
+        <br>
+        <h5>{{ paper_.date|date:"M/d/Y"}} </h5>
+        <span class = 'tt'> <p style="background-color: #EFE;font-size: 14px;display: block;padding: 10px;border-radius: 5px;text-align: justify;">{{ paper_.abstract }} </p></span>
+        <h5>Reviews : {{ paper_.review_set.count }} </h5>
+        <h5>Average rating: {{ paper_.average_rating | floatformat }} </h5>
+        <br>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No similar paper detected</p>
+{% endif %}
+{% endblock %}

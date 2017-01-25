@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Paper list</h2>
+{% endblock %}
+
+{% block content %}
+{% if paper_list %}
+<div class="row">
+    {% for paper in paper_list %}
+    <div class="col-xs-6 col-lg-4">
+        <h4><a href="{% url 'reviews:paper_detail' paper.recid %}">
+        {{ paper.name }}
+        </a></h4>
+        <h5>{{ paper.review_set.count }} reviews</h5>
+        <h5>{{ paper.average_rating | floatformat }} average rating</h5>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+    <p>No papers are available.</p>
+{% endif %}
+{% endblock %}

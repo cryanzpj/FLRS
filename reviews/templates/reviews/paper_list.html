@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+
+
+
+
+
+{% block content %}
+    <div id="sbox" style="margin-top: 10px;
+    text-align: center;">
+
+
+  <form method="get" action="/reviews/search" style="display: block;
+    margin-top: 0em;" class="nav-searchbar">
+     <div class="nav-left">
+      <img src= "/media/search1.png" style="width: 40px;height: 40px;float: right" />
+    </div>
+
+
+    <div class="wrapper" style="border: black">
+  	<input name="search_box" class="inactive" type="text" id="qfield" style="
+    width: 950px;
+{#    border: solid 1px grey;#}
+    height: 40px;
+    font-size: 18px;
+    color: black;
+    " value="{{ search_box }}"
+    >
+      <select name = 'search_by' style="float: left;height: 35px; width: 130" >
+            <option value="Default">Search By: {{ search_by }}</option>
+            <option value="Author">Author</option>
+            <option value="Text">Text</option>
+        </select>
+    </div>
+  </form>
+
+
+
+</div>
+
+    <div class="msg" style="background-color: #EEF;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 2px;">
+        Showing most recent papers:
+    <form  method = "post" style="float: right">
+        {% csrf_token %}
+        <select name = 'number'>
+            <option value="Default">Item: {{ show }}</option>
+            <option value="10">Show 10</option>
+            <option value="20">Show 20</option>
+            <option value="all">Show all</option>
+        </select>
+
+
+        <select name="orderby">
+            <option value="Defualt">Sort by: {{ rank }}</option>
+            <option value="Newest to Oldest">Date: Newest to Oldest</option>
+            <option value="Avg Rating: High to Low">Avg Rating: High to Low</option>
+            <option value="Num Rating: High to Low">Num Rating: High to Low</option>
+            <input type="submit" name = "Submit" value="Show" />
+        </select>
+      </form>
+    </div>
+
+
+
+
+
+{% if paper_list %}
+<div class="row" style="margin-left: auto;
+    margin-right: auto;
+    background: white">
+    {% for paper in paper_list %}
+    <div class="apaper">
+        <h4><a style="color:black;float:left" href="{% url 'reviews:paper_detail' paper.recid %}">
+        {{ paper.name }}
+        </a></h4>
+        <h5> <a style="float: right;cursor: pointer;text-decoration: underline; display: inline-block;"  href="{% url 'reviews:show_similar_paper' paper.recid %}">
+            Show similar Papers > </a> </h5>
+        <br>
+        {% if paper.author.all  %}
+            {% for author in paper.author.all %}
+                <p style="float:left;color:#900;font-family:arial">{{ author.name }}</p>
+                <div style="height:12px;width:20px;background-color:white;float:left;"></div>
+            {% endfor %}
+
+        {% endif %}
+        <br>
+        <h5>{{ paper.date|date:"M/d/Y"}} </h5>
+        <span class = 'tt'> <p style="background-color: #EFE;font-size: 14px;display: block;padding: 10px;border-radius: 5px;text-align: justify;">{{ paper.abstract }} </p></span>
+        <h5>Reviews : {{ paper.review_set.count }} </h5>
+        <h5>Average rating: {{ paper.average_rating | floatformat }} </h5>
+        <br>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+    <p>No papers are available.</p>
+{% endif %}
+{% endblock %}

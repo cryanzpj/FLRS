@@ -1,0 +1,60 @@
+{% load bootstrap3 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block bootstrap3_content %}
+
+<style>
+body {
+    background-color: white;
+}
+</style>
+<div class = "container">
+ <img src= "/media/header_1.png" style="width: 1125px;height:100px;float: left" >
+    {# <img src="/media/clip.png" style="position: absolute;#}
+    {#    top: -7px;#}
+    {#    right: 170px;#}
+    {#    background:  no-repeat;#}
+    {#    width: 40px;#}
+    {#    height: 60px;">#}
+ </div>
+    <a class="navbar-brand" href="https://github.com/NYU-CDS-Capstone-Project/NGU"> <img src = "/media/fork.png " style="position: absolute;
+    top: -7px;
+    right: 164px;
+    background:  no-repeat;
+    width: 95px;
+    height: 95px;"></a>
+
+<div class="container">
+    <nav class="navbar navbar-default"  >
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'reviews:review_list' %}"> <img src= "/media/logo.png" style="width: 90px;height:30px;float: left" > </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'reviews:paper_list' %}">Paper list</a></li>
+                <li><a href="{% url 'reviews:review_list' %}">Reviews</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'reviews:user_review_list' user.username %}">Hello {{ user.username }}</a></li>
+                <li><a href="{% url 'reviews:user_recommendation_list' %}">Paper suggestions</a></li>
+                <li><a href="{% url 'auth:logout' %}">Logout</a></li>
+                {% else %}
+                <li><a href="{% url 'auth:login' %}">Login</a></li>
+                <li><a href="/accounts/register">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+
+    <h1>{% block title %}(no title){% endblock %}</h1>
+
+    {% bootstrap_messages %}
+
+    {% block content %}(no content){% endblock %}
+</div>
+
+{% endblock %}
