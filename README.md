@@ -1,5 +1,4 @@
 # FLRS: a Django Template for Recommendation Websites 
-=================================
 
 ![scalar](./image/shot.png)
 
