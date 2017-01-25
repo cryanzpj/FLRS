@@ -26,3 +26,7 @@ Prerequisites
 - [Sklearn](http://scikit-learn.org/stable/)
 - [Gensim](https://radimrehurek.com/gensim/)
 - [Django](https://www.djangoproject.com/)
+
+Author
+-------------
+Yuhao Zhao, yuhao.zhao@nyu.edu
