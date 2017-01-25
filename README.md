@@ -5,12 +5,18 @@ A physics literature recommendation website based on data from [INSPIRE-HEP](htt
 ![scalar](./image/shot.png)
 
 ## Usage
+To run on a local server: 
+```
+python manage.py runserver
+```
+And access the website at http://127.0.0.1:8000/reviews/paper
 
-To load your own data, modify the load.py 
 To use database commands: 
 ```
 python manage.py dbshell
 ```
+To load your own data, modify the load.py 
+
 
 
 Prerequisites
