@@ -4,6 +4,13 @@ A physics literature recommendation website based on data from [INSPIRE-HEP](htt
 
 ![scalar](./image/shot.png)
 
+## Usage
+
+To load your own data, modify the load.py 
+To use database commands: 
+```
+python manage.py dbshell
+```
 
 
 Prerequisites
